@@ -1,47 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    
-</body>
-<script>
-    function SuperType(){
-        this.colors = [1,2,3]
-        // this.name 
+  </head>
+  <body></body>
+  <script>
+    function SuperType() {
+      this.colors = [1, 2, 3];
+      // this.name
     }
     // colors 实例会被共享
-    function SubType(){}
-    SubType.prototype = new SuperType()
-    let ins1 = new SubType()
-    ins1.colors.push(4)
-    console.log(ins1.colors)
-    let ins2 = new SubType()
-    console.log(ins2.colors)
+    function SubType() {}
+    SubType.prototype = new SuperType();
+    let ins1 = new SubType();
+    ins1.colors.push(4);
+    console.log(ins1.colors);
+    let ins2 = new SubType();
+    console.log(ins2.colors);
     // 盗用构造函数
-    function SubCallConta(){
-        SuperType.call(this)
+    function SubCallConta() {
+      SuperType.call(this);
     }
-    let inss1 = new SubCallConta()
-    inss1.colors.push(100)
-    let inss12 = new SubCallConta()
-    console.log(inss1.colors)
-    console.log(inss12.colors)
+    let inss1 = new SubCallConta();
+    inss1.colors.push(100);
+    let inss12 = new SubCallConta();
+    console.log(inss1.colors);
+    console.log(inss12.colors);
     // 组合继承
-    function SubCallzuhe(){
-        SuperType.call(this)
+    function SubCallzuhe() {
+      SuperType.call(this);
     }
-    SubCallzuhe.prototype = new SuperType()
-    SubCallzuhe.prototype.sayAge = function (){
-        console.log('SubCallzuhe.prototype.sayAge')
+    SubCallzuhe.prototype = new SuperType();
+    SubCallzuhe.prototype.sayAge = function () {
+      console.log("SubCallzuhe.prototype.sayAge");
+    };
+    let z1 = new SubCallzuhe();
+    console.log(z1);
+    z1.colors.push(99);
+    let z2 = new SubCallzuhe();
+    console.log(z2);
+
+    // 原型式继承
+    function object(o) {
+      function Fn() {}
+      Fn.prototype = o;
+      return new Fn()
     }
-    let z1 = new SubCallzuhe()
-    console.log(z1)
-    z1.colors.push(99)
-    let z2 = new SubCallzuhe()
-    console.log(z2)
-</script>
+    const per = {
+        name: 1,
+        age: 2
+    }
+    const perSo = object(per)
+    console.log(perSo)
+  </script>
 </html>
