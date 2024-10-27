@@ -11,6 +11,7 @@
 <script>
     function SuperType(){
         this.colors = [1,2,3]
+        // this.name 
     }
     // colors 实例会被共享
     function SubType(){}
@@ -29,5 +30,18 @@
     let inss12 = new SubCallConta()
     console.log(inss1.colors)
     console.log(inss12.colors)
+    // 组合继承
+    function SubCallzuhe(){
+        SuperType.call(this)
+    }
+    SubCallzuhe.prototype = new SuperType()
+    SubCallzuhe.prototype.sayAge = function (){
+        console.log('SubCallzuhe.prototype.sayAge')
+    }
+    let z1 = new SubCallzuhe()
+    console.log(z1)
+    z1.colors.push(99)
+    let z2 = new SubCallzuhe()
+    console.log(z2)
 </script>
 </html>
