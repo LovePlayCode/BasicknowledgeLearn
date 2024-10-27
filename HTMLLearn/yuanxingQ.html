@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function SuperType(){
+        this.colors = [1,2,3]
+    }
+    // colors 实例会被共享
+    function SubType(){}
+    SubType.prototype = new SuperType()
+    let ins1 = new SubType()
+    ins1.colors.push(4)
+    console.log(ins1.colors)
+    let ins2 = new SubType()
+    console.log(ins2.colors)
+    // 盗用构造函数
+    function SubCallConta(){
+        SuperType.call(this)
+    }
+    let inss1 = new SubCallConta()
+    inss1.colors.push(100)
+    let inss12 = new SubCallConta()
+    console.log(inss1.colors)
+    console.log(inss12.colors)
+</script>
+</html>
