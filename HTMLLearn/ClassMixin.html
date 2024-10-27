@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    class Vehicle{}
+    let FooMixin = (Superclass) => class extends Superclass{
+        foo(){
+            console.log('foo')
+        }
+    }
+    let BarMixin = (Superclass) => class extends Superclass{
+        fly(){
+            console.log('fly')
+        }
+    }
+    
+    let BazMixin = (Superclass) => class extends Superclass{
+        say(){
+            console.log('say')
+        }
+    }
+    class Bus extends FooMixin(BarMixin(BazMixin(Vehicle))){}
+    let bus = new Bus()
+    console.log(bus)
+    function myFn(){
+        console.log(arguments)
+    }
+    myFn('123')
+</script>
+</html>

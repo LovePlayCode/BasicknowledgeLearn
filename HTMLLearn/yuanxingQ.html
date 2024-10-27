@@ -71,5 +71,44 @@
         prototype.constructor = subType
         subType.prototype = prototype
     }
+    class MyClass{
+        #name = 3
+        static Mya(){}
+        static Method(){}
+        static name = 3
+    }
+    class MySon extends MyClass{
+        constructor(name){
+            super()
+            this.name = name
+        }
+    }
+    const a = new MySon('LHL')
+    console.log(typeof MyClass,a)
+
+    // 抽象基类
+    class Vehicle{
+        constructor(){
+            console.log('new.target',new.target)
+            if(new.target === Vehicle){
+                throw new Error('错误')
+            }
+           
+        }
+        sayHelo(){}
+    }
+    // const v1 = new Vehicle()
+    // 继承内置类型
+    class SuperArray extends Array{
+        shu(){
+            console.log('shu')
+        }
+        static get [Symbol.species](){
+            return Array
+        }
+    }
+    const superArr = new SuperArray()
+    console.log(superArr instanceof SuperArray)
+    console.log([] instanceof SuperArray)
   </script>
 </html>
