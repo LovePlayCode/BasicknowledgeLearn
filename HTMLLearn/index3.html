@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    function Person(name) {
+      this.name = name;
+    }
+    // 函数不能重写  类可以
+    Person[Symbol.hasInstance] = function (instance) {
+      return true;
+    };
+
+    Person.djskadjklas = 3231
+    class PrimitiveNumber {
+      static [Symbol.hasInstance](x) {
+        return true
+      }
+    }
+    const per = new Person("123");
+    console.log(Person, PrimitiveNumber);
+    console.log(per instanceof Person);
+    console.log(1 instanceof PrimitiveNumber);
+    function Range(start, end) {
+      this.start = start;
+      this.end = end;
+    }
+
+    Range[Symbol.hasInstance] = function (instance) {
+      return true
+    };
+
+    console.log(10 instanceof Range); // true
+    console.log(20 instanceof Range); // false
+  </script>
+</html>

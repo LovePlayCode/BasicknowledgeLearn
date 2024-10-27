@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      ul {
+        background-color: #bfa;
+        height: 300px;
+        overflow: auto;
+      }
+      li {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <ul>
+      <li>sadasdasdsadasdsadsadasdas</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+    </ul>
+  </body>
+  <script>
+    const ul = document.querySelector("ul");
+    const cds = ul.childNodes;
+    console.log(cds);
+    const range = document.createRange(); // 创建一个 Range 对象
+    const p = document.querySelector("li"); // 选择一个 <p> 元素
+
+    // 将 Range 范围设置为 <p> 中的第一个字节点
+    range.setStart(p.firstChild, 0); // 从第一个字符开始
+    range.setEnd(p.firstChild, 5); // 到第5个字符结束
+
+    console.log(range.toString()); // 输出选中的文本
+
+    // 折叠到 Range 的起点
+    range.collapse(true);
+
+    console.log(range.toString()); // 输出为空，因为已经折叠
+  </script>
+</html>
