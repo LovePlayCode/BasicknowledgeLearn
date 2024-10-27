@@ -54,5 +54,16 @@
     }
     const perSo = object(per)
     console.log(perSo)
+    
+    // 寄生式继承
+    function createAnother(original){
+        let clone = object(original)
+        clone.sayHi = function(){
+            console.log('sayHi')
+        }
+        return clone
+    } 
+    const casy = createAnother(perSo)
+    casy.sayHi()
   </script>
 </html>
