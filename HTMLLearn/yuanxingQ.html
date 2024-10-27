@@ -65,5 +65,11 @@
     } 
     const casy = createAnother(perSo)
     casy.sayHi()
+    // 寄生式组合继承
+    function inheritPrototype(subType,superType){
+        let prototype = object(superType.prototype)
+        prototype.constructor = subType
+        subType.prototype = prototype
+    }
   </script>
 </html>
