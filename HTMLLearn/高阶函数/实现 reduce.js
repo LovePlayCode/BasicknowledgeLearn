@@ -37,6 +37,9 @@ const getMax = (a, b) => Math.max(a, b);
 // 从索引 0 开始为数组中的每个元素调用回调函数
 const res1 = [1, 100].reduce(getMax, 50); // 100
 console.log('res1==',res1)
+const arrLike = { 0: 'a', 1: 'b', length: '5.5' };  // length 是字符串 '5.5'
+const res2 = Array.prototype.reduce.call(arrLike, (acc, val) => acc + val, ''); 
+console.log('res2==',res2)
 // [50].reduce(getMax, 10); // 50
 
 // // 仅为索引 1 处的元素调用回调函数
