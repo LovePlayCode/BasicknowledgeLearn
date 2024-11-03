@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    Function.prototype.mybind = function (context, ...args) {
+      if (Object.prototype.toString.call(this) !== "[object Function]") {
+        throw new TypeError("Type Error");
+      }
+      const self = this;
+      const fn = function () {
+        return self.call(
+          this instanceof self ? this : context,
+          ...args.concat(Array.from(arguments))
+        );
+      };
+      fn.prototype = Object.create(self.prototype);
+      return fn;
+    };
+    function Person(a,c,v) {
+        console.log(a,c,v)
+      this.name = "lhl";
+    }
+    const newPerson = Person.mybind({ a: 2 },2,3,4,5);
+    const per = new newPerson();
+    console.log(per);
+  </script>
+</html>
