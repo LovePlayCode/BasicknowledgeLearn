@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 入口文件的宏任务
+    new Promise((res,reject)=>{
+        res(true)
+        // 每一次都会注册一个微任务， 当前宏任务执行完成之后，会拿出来微任务队列里的微任务全部执行一遍。
+    }).then((resData)=>{
+        console.log('成功==',resData)
+        return 'lhl真帅'
+    }).then((lhlData)=>{
+        console.log(lhlData)
+    })
+    setTimeout(() => {
+        console.log('123')
+    }, 0);
+    console.log('李浩龙真帅～')
+</script>
+</html>
