@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    function forEach(array, iteratee) {
+      let index = -1;
+      const length = array.length;
+      while (++index < length) {
+        iteratee(array[index], index);
+      }
+      return array;
+    }
+
+    const isObject = (target) =>
+      (typeof target === "object" || typeof target === "function") &&
+      target !== null;
+    function clone(target, map = new WeakMap()) {
+      if (isObject(target)) {
+        if (map.get(target)) {
+          return map.get(target);
+        }
+        const cloneObj = Array.isArray(target) ? [] : {};
+        const keys = Object.keys(target);
+        map.set(target, cloneObj);
+        forEach(keys, (value, index) => {
+          cloneObj[value] = clone(target[value], map);
+        });
+        return cloneObj;
+      } else {
+        return target;
+      }
+    }
+    const a = { name: "lhl", age: 20 };
+    a.target = a;
+   
+    const newObj2 = clone(a);
+    a.target.age  = 100
+    console.log(newObj2);
+  </script>
+</html>
