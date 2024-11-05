@@ -28,9 +28,10 @@ function getType(target) {
 /**
  * 保留实例的属性
  */
-function getInit(target){
-    const Ctor = target.constructor
-    return new Ctor()
+function getInit(target) {
+    console.log('target==.',target)
+  const Ctor = target.constructor;
+  return new Ctor();
 }
 
 //   const getType = Object.prototype.toString.call(obj);
@@ -50,6 +51,25 @@ function forEach(array, iteratee) {
   }
   return array;
 }
+
+/**
+ * 记录一些能被 toString.call 出来的数据类型
+ */
+const mapTag = "[object Map]";
+const setTag = "[object Set]";
+const arrayTag = "[object Array]";
+const objectTag = "[object Object]";
+const argsTag = "[object Arguments]";
+
+const boolTag = "[object Boolean]";
+const dateTag = "[object Date]";
+const errorTag = "[object Error]";
+const numberTag = "[object Number]";
+const regexpTag = "[object RegExp]";
+const stringTag = "[object String]";
+const symbolTag = "[object Symbol]";
+// 可以遍历的数据类型
+const deepTag = [mapTag, setTag, arrayTag, objectTag, argsTag];
 
 /**
  * 1. map 中是否有值，有值就返回target
@@ -82,8 +102,10 @@ function deepClone(target, map = new WeakMap()) {
  *
  * @param {Record<string,any>} target
  * @param {WeakMap} map
- * 1. 判断是否是对象
- * 2. 判断是否是数组
+ * 1. 拿到原始类型，通过Object.prototype.toString.call
+ * 2. 判断是否为可迭代的数据类型
+ *    a. 判断是否为 set
+ *    b. 判断是否为map
  * 3. 初始化值
  * 4. 判断是否有循环引用
  * 5. map.set
@@ -95,7 +117,30 @@ function clone(target, map = new WeakMap()) {
     if (map.get(target)) {
       return map.get(target);
     }
-    const cloneObj = Array.isArray(target) ? [] : {};
+    let cloneObj = {};
+    const type = getType(target);
+  
+    if (deepTag.includes(type)) {
+      cloneObj = getInit(target);
+    }
+    
+    console.log(type,cloneObj)
+
+    map.set(target, cloneObj);
+    // 处理set
+    if (type === setTag) {
+      target.forEach((item) => {
+        cloneObj.add(clone(item, map));
+      });
+      return cloneObj;
+    }
+    // 处理 map
+    if (type === mapTag) {
+      target.forEach((value, key) => {
+        cloneObj.set(key, clone(value, map));
+      });
+      return cloneObj;
+    }
     const keys = Object.keys(target);
     map.set(target, cloneObj);
     forEach(keys, (value, index) => {
