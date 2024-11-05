@@ -29,9 +29,26 @@ function getType(target) {
  * 保留实例的属性
  */
 function getInit(target) {
-    console.log('target==.',target)
+
   const Ctor = target.constructor;
   return new Ctor();
+}
+
+/**
+ * 对 Symbol 的克隆
+ */
+function cloneSymbol(targe){
+    return Object(Symbol.prototype.valueOf.call(targe))
+}
+
+/**
+ * 克隆正则
+ */
+function cloneReg(targe) {
+    const reFlags = /\w*$/;
+    const result = new targe.constructor(targe.source, reFlags.exec(targe));
+    result.lastIndex = targe.lastIndex;
+    return result;
 }
 
 //   const getType = Object.prototype.toString.call(obj);
@@ -124,7 +141,7 @@ function clone(target, map = new WeakMap()) {
       cloneObj = getInit(target);
     }
     
-    console.log(type,cloneObj)
+  
 
     map.set(target, cloneObj);
     // 处理set
