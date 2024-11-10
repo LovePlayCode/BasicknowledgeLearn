@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button class="btn1">是否会阻塞浏览器正常执行</button>
+</body>
+<script>
+    const btn = document.querySelector('.btn1')
+    btn.addEventListener('click',()=>{
+        console.log('李浩龙');
+        
+    })
+    // 按理说先执行宏任务， 宏任务会产生微任务和宏任务， 微任务进微任务队列，宏任务进宏任务队列。 然后宏任务执行完毕
+    // 执行当前微任务产生的微任务， 然后交给浏览器， 再去执行下一个宏任务。
+    // 测试微任务和宏任务
+    Promise.resolve().then(()=>{
+        console.log(123)
+        while(true){
+            console.log('123')
+        }
+        setTimeout(() => {
+            console.log('李浩龙真帅')
+        }, 0);
+        return 'lhl'
+    }).then(console.log)
+    console.log('李浩龙')
+    setTimeout(() => {
+        console.log('dsakld ')
+    }, 0);
+</script>
+</html>
