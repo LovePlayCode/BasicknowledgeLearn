@@ -17,8 +17,9 @@ function MyPromise(executor) {
   self.value = null;
   self.error = null;
   self.status = PENDING;
-  self.onFulfilled = null;
-  self.onRejected = null;
+  this.onFulfilledCallbacks = []
+  this.onRejectedCallbacks = [];
+
   const resolve = (value) => {
     if (self.status !== PENDING) {
       return;
@@ -26,8 +27,12 @@ function MyPromise(executor) {
     setTimeout(() => {
       self.value = value;
       self.status = FULFILLED;
-      if (typeof self.onFulfilled === "function") {
-        self.onFulfilled(self.value);
+      if (Array.isArray(self.onFulfilledCallbacks)) {
+        // self.onFulfilled(self.value);
+        self.onFulfilledCallbacks.forEach(fn=>{
+            fn(self.value)
+        })
+
       }
     }, 0);
   };
@@ -39,8 +44,11 @@ function MyPromise(executor) {
     setTimeout(() => {
       self.error = error;
       self.status = REJECTED;
-      if (typeof self.onRejected === "function") {
-        self.onRejected(self.error);
+      if (Array.isArray(self.onRejectedCallbacks)) {
+        // self.onRejected(self.error);
+        self.onRejectedCallbacks.forEach(efn=>{
+            efn(self.error)
+        })
       }
     }, 0);
   };
@@ -51,8 +59,9 @@ function MyPromise(executor) {
 MyPromise.prototype.then = function (onFulfilled, onRejected) {
   // 如果是pending状态，先给回调赋值
   if (this.status === PENDING) {
-    this.onFulfilled = onFulfilled;
-    this.onRejected = onRejected;
+    this.onFulfilledCallbacks.push(onFulfilled);
+    this.onRejectedCallbacks.push(onRejected);
+
   }
   // 如果是fulfilled 直接调用成功回调，并将成功值返回
   if (this.status === FULFILLED) {
@@ -62,6 +71,7 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
   if (this.status === REJECTED) {
     onRejected(this.value);
   }
+  return this
 };
 
 let promise1 = new MyPromise((resolve, reject) => {
