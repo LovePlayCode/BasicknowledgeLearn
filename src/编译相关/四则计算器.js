@@ -105,6 +105,8 @@ function AdditiveExpression(source) {
       operator: "+",
       children: [],
     };
+
+    // 先乘除,后加减  这边先push出来操作符和+， 解析高优先级的右操作符。
     node.children.push(source.shift());
     node.children.push(source.shift());
     MultiplicativeExpression(source);
