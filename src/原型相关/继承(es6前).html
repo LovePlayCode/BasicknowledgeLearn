@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>利用原型链继承</h1>
+</body>
+<script>
+    const cat = {
+        say() {
+            console.log('meow~')
+        },
+        jump() {
+            console.log('jump')
+        }
+    }
+
+    // 第一个参数，指定新创建对象的原型，第二个参数，将为新创建的对象添加具有对应属性名称的属性描述符。
+    const tiger = Object.create(cat, {
+        say: {
+            writable: true,
+            configurable: true,
+            enumerable: true,
+            value: () => {
+                console.log('roar!')
+            }
+        }
+    })
+    console.log(tiger)
+    tiger.say();
+
+
+    /**
+     * 使用构造器模拟类
+     * */
+    function c1() {
+        this.p1 = 1;
+
+        this.p2 = function () {
+            console.log(this.p1)
+        }
+    }
+    const o1 = new c1()
+    o1.p2()
+
+    function c2() {
+
+    }
+    c2.prototype.p1 = 100
+    c2.prototype.p2 = function () {
+        console.log('c2的 this==', this)
+        console.log(this.p1)
+    }
+
+    const o2 = new c2()
+    o2.p1 = 300
+    o2.p2()
+</script>
+
+</html>

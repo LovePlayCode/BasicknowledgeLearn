@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>继承(es6)</h1>
+</body>
+<script>
+    // 父类
+    class Animal {
+        say() {
+            console.log('我是Animal')
+        }
+    }
+
+    class Cat extends Animal {
+        say() {
+            console.log('miaowu~');
+
+        }
+    }
+
+    const cat = new Cat()
+    cat.say()
+</script>
+
+</html>
