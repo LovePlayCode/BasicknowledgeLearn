@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>执行上下文</h1>
+</body>
+<script>
+    var a = 1;
+    foo()
+    var b = 2
+    function foo() {
+        console.log(b)
+        console.log(a)
+    }
+    foo()
+
+</script>
+
+</html>
