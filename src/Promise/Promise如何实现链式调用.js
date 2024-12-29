@@ -15,7 +15,7 @@ function resolvePromise(bridgePromise, x, resolve, reject) {
         (error) => reject(error)
       );
     } else {
-      x.then(resolve);
+      x.then(resolve, reject);
     }
   } else {
     resolve(x);
@@ -42,11 +42,12 @@ function MyPromise(executor) {
       return;
     }
     setTimeout(() => {
+      console.log("先注册哪个内部");
       self.value = value;
-      console.log("先运行 ");
       self.status = FULFILLED;
       if (Array.isArray(self.onFulfilledCallbacks)) {
         // self.onFulfilled(self.value);
+        console.log("self==", self.onFulfilledCallbacks);
         self.onFulfilledCallbacks.forEach((fn) => {
           fn(self.value);
         });
@@ -74,6 +75,7 @@ function MyPromise(executor) {
 
 // 在一个函数的 prototype 上绑定一个 then 方法，通过 then 进行链式调用
 MyPromise.prototype.then = function (onFulfilled, onRejected) {
+  console.log(this);
   // 成功回调不传给它一个默认函数
   onFulfilled =
     typeof onFulfilled === "function" ? onFulfilled : (value) => value;
@@ -91,7 +93,7 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
     return (bridgePromise = new MyPromise((resolve, reject) => {
       // 这个是注册到 Promise 异步调用的方法
       setTimeout(() => {
-        console.log("先注册");
+        console.log("先注册哪个外部");
         self.onFulfilledCallbacks.push((value) => {
           try {
             let x = onFulfilled(value);
@@ -101,6 +103,7 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
             reject(x);
           }
         });
+
         self.onRejectedCallbacks.push((error) => {
           try {
             let x = onRejected(error);
@@ -147,15 +150,15 @@ Promise.prototype.catch = function (onRejected) {
   return this.then(null, onRejected);
 };
 
-let promise1 = new MyPromise((resolve, reject) => {
-  fs.readFile("./001.txt", (err, data) => {
-    if (!err) {
-      resolve(data);
-    } else {
-      reject(err);
-    }
-  });
-});
+// let promise1 = new MyPromise((resolve, reject) => {
+//   fs.readFile("./001.txt", (err, data) => {
+//     if (!err) {
+//       resolve(data);
+//     } else {
+//       reject(err);
+//     }
+//   });
+// });
 // let x1 = promise1.then((data) => {
 //   console.log("第一次展示", data.toString());
 // });
@@ -192,13 +195,20 @@ let readFilePromise = (filename) => {
 //     })
 // },500)
 
-readFilePromise("./001.txt")
-  .then((data) => {
-    console.log(data.toString());
-    return readFilePromise("./002.txt");
-  })
-  .then((data) => {
-    console.log(data.toString());
-  });
+// readFilePromise("./001.txt")
+//   .then((data) => {
+//     console.log(data.toString());
+//     return readFilePromise("./002.txt");
+//   })
+//   .then((data) => {
+//     console.log(data.toString());
+//   });
 
-console.log("测试 003");
+// console.log("测试 003");
+
+new MyPromise((resolve) => {
+  console.log("12");
+  resolve("success");
+}).then((res) => {
+  console.log("第一个==", res);
+});
