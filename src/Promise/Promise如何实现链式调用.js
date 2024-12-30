@@ -10,11 +10,13 @@ function resolvePromise(bridgePromise, x, resolve, reject) {
     if (x.status === PENDING) {
       x.then(
         (y) => {
+          console.log("y==", y);
           resolvePromise(bridgePromise, y, resolve, reject);
         },
         (error) => reject(error)
       );
     } else {
+      console.log("x==", x);
       x.then(resolve, reject);
     }
   } else {
@@ -42,12 +44,11 @@ function MyPromise(executor) {
       return;
     }
     setTimeout(() => {
-      console.log("先注册哪个内部");
       self.value = value;
       self.status = FULFILLED;
       if (Array.isArray(self.onFulfilledCallbacks)) {
         // self.onFulfilled(self.value);
-        console.log("self==", self.onFulfilledCallbacks);
+
         self.onFulfilledCallbacks.forEach((fn) => {
           fn(self.value);
         });
@@ -75,7 +76,6 @@ function MyPromise(executor) {
 
 // 在一个函数的 prototype 上绑定一个 then 方法，通过 then 进行链式调用
 MyPromise.prototype.then = function (onFulfilled, onRejected) {
-  console.log(this);
   // 成功回调不传给它一个默认函数
   onFulfilled =
     typeof onFulfilled === "function" ? onFulfilled : (value) => value;
@@ -93,7 +93,6 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
     return (bridgePromise = new MyPromise((resolve, reject) => {
       // 这个是注册到 Promise 异步调用的方法
       setTimeout(() => {
-        console.log("先注册哪个外部");
         self.onFulfilledCallbacks.push((value) => {
           try {
             let x = onFulfilled(value);
@@ -207,8 +206,26 @@ let readFilePromise = (filename) => {
 // console.log("测试 003");
 
 new MyPromise((resolve) => {
-  console.log("12");
-  resolve("success");
-}).then((res) => {
-  console.log("第一个==", res);
-});
+  setTimeout(() => {
+    resolve("success");
+  }, 0);
+})
+  .then((res) => {
+    console.log("第一个==", res);
+    return new MyPromise((res) => {
+      setTimeout(() => {
+        res(
+          new MyPromise((resolvoe) => {
+            resolvoe(
+              new MyPromise((res) => {
+                res("lhl无敌");
+              })
+            );
+          })
+        );
+      }, 0);
+    });
+  })
+  .then((res) => {
+    console.log("第二个==", res);
+  });
