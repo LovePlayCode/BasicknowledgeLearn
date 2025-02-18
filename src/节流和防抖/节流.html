@@ -13,43 +13,34 @@
     </label>
   </body>
   <script>
-    function debounce(fn, delay, options = {}) {
-      const { immediate = false } = options;
-      // 用户保存定时器的 ID
-      let timer = null;
-      let isInvoke = false;
-      const _debounce = function (...args) {
-        // 如果重复调用，清空定时器，延迟生效时间。
-        if (typeof timer === "number") {
-          clearTimeout(timer);
-        }
-        // 判断是否第一次调用
-        if (immediate && !isInvoke) {
+    function throttle(fn, interval) {
+      let lastTime = 0;
+      const _throttle = function (...args) {
+        //首先拿到当前的时间
+        const nowTime = new Date().getTime();
+        //传递进来的时间间隔 用当前的时间减去上一次触发的时间
+        //得到最新的剩余时间
+        const reamainTime = interval - (nowTime - lastTime);
+        if (reamainTime <= 0) {
           fn.apply(this, args);
-          isInvoke = true;
-        } else {
-          timer = setTimeout(() => {
-            //剩下的操作在规定时间内 会等待定时器结束
-            fn.apply(this, args);
-            //同时重新刷新inInvoke
-            isInvoke = false;
-          }, delay);
+          //如果剩余时间小于0 说明已经达到一个间隔
+          //并且将现在的时间赋值给lastTime
+          //在时间间隔内 这样无论执行多少次 都只会执行第一次的操作
+          //因为第一次的lastTime是0 而nowTime是比较大的
+          //减去之后一定是个负数 所以会执行第一次
+          //而不会执行后续的操作
+          lastTime = nowTime;
         }
       };
-      // 实现取消功能，直接清空定时器即可
-      _debounce.cancel = function () {
-        if (timer) {
-          clearTimeout(timer);
-        }
-      };
-      return _debounce;
+      return _throttle;
     }
+
     const inputWrapper = document.querySelector(".inputWrapper");
-    const debounceFn = debounce((e) => {
+    const throttleFn = throttle((e) => {
       console.log("打印信息==>", e);
     }, 1000);
     inputWrapper.addEventListener("input", (e) => {
-      debounceFn(e);
+      throttleFn(e);
     });
   </script>
 </html>
