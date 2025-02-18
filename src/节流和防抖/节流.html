@@ -36,6 +36,12 @@
           }, delay);
         }
       };
+      // 实现取消功能，直接清空定时器即可
+      _debounce.cancel = function () {
+        if (timer) {
+          clearTimeout(timer);
+        }
+      };
       return _debounce;
     }
     const inputWrapper = document.querySelector(".inputWrapper");
