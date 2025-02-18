@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <label>
+      请输入用户名:
+      <input class="inputWrapper" />
+    </label>
+  </body>
+  <script>
+    function debounce(fn, delay, options = {}) {
+      const { immediate = false } = options;
+      // 用户保存定时器的 ID
+      let timer = null;
+      let isInvoke = false;
+      const _debounce = function (...args) {
+        // 如果重复调用，清空定时器，延迟生效时间。
+        if (typeof timer === "number") {
+          clearTimeout(timer);
+        }
+        // 判断是否第一次调用
+        if (immediate && !isInvoke) {
+          fn.apply(this, args);
+          isInvoke = true;
+        } else {
+          timer = setTimeout(() => {
+            //剩下的操作在规定时间内 会等待定时器结束
+            fn.apply(this, args);
+            //同时重新刷新inInvoke
+            isInvoke = false;
+          }, delay);
+        }
+      };
+      return _debounce;
+    }
+    const inputWrapper = document.querySelector(".inputWrapper");
+    const debounceFn = debounce((e) => {
+      console.log("打印信息==>", e);
+    }, 1000);
+    inputWrapper.addEventListener("input", (e) => {
+      debounceFn(e);
+    });
+  </script>
+</html>
