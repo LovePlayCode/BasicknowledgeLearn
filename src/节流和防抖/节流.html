@@ -13,11 +13,14 @@
     </label>
   </body>
   <script>
-    function throttle(fn, interval) {
+    function throttle(fn, interval,option = { leading: true }) {
       let lastTime = 0;
+      const { leading } = option;
       const _throttle = function (...args) {
         //首先拿到当前的时间
         const nowTime = new Date().getTime();
+        // 如果不想让第一次运行，那么就让lastTime = nowTime，第一次就不会运行了。
+        if (!leading && !lastTime) lastTime = nowTime;
         //传递进来的时间间隔 用当前的时间减去上一次触发的时间
         //得到最新的剩余时间
         const reamainTime = interval - (nowTime - lastTime);
