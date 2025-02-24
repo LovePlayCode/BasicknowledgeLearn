@@ -13,7 +13,11 @@
     </label>
   </body>
   <script>
-    function throttle(fn, interval,option = { leading: true,tralling: false }) {
+    function throttle(
+      fn,
+      interval,
+      option = { leading: true, tralling: false }
+    ) {
       let lastTime = 0;
       let timer = null;
       const { leading, tralling } = option;
@@ -27,9 +31,9 @@
         const reamainTime = interval - (nowTime - lastTime);
         if (reamainTime <= 0) {
           fn.apply(this, args);
-          if(timer){
-            clearTimeout(timer)
-            timer = null
+          if (timer) {
+            clearTimeout(timer);
+            timer = null;
           }
           //如果剩余时间小于0 说明已经达到一个间隔
           //并且将现在的时间赋值给lastTime
@@ -38,13 +42,13 @@
           //减去之后一定是个负数 所以会执行第一次
           //而不会执行后续的操作
           lastTime = nowTime;
-        }else{
+        } else {
           timer = setTimeout(() => {
-            timer = null
-            // 根据leading的状态去设置一下lastTime的状态 
+            timer = null;
+            // 根据leading的状态去设置一下lastTime的状态
             // 解释一下，当 leading 为 false，说明不希望首次执行，所以会走到 if (!leading && !lastTime) lastTime = nowTime; 这行代码里
             // 如果为 true，说明希望首次执行，那么当最后一次走完后，
-            lastTime =  leading === false ? 0 : new Date().getTime()
+            lastTime = leading === false ? 0 : new Date().getTime();
           }, reamainTime);
         }
       };

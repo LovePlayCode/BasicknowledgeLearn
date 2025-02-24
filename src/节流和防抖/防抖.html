@@ -11,6 +11,7 @@
       请输入用户名:
       <input class="inputWrapper" />
     </label>
+    <div id="divWrapper">点击清除定时器</div>
   </body>
   <script>
     function debounce(fn, delay, options = {}) {
@@ -51,6 +52,14 @@
     }, 1000);
     inputWrapper.addEventListener("input", (e) => {
       debounceFn(e);
+    });
+
+    const timer = setTimeout(() => {
+      console.log("123");
+    }, 30);
+    const divWrapper = document.getElementById("divWrapper");
+    divWrapper.addEventListener("click", () => {
+      clearTimeout(timer);
     });
   </script>
 </html>
