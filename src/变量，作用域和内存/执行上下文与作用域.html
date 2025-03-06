@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // 变量或函数的上下文决定了它们可以访问哪些数据，以及它们的行为。
+    // 每个上下文都有一个关联的变量对象，这个上下文中定义的所有变量和函数都存在于这个对象上。
+    // 上下文中的代码在执行时，会创建变量的一个作用域链，作用域链决定了各级上下文中的代码在访问变量和函数时的顺序。
+    // 代码正在执行的上下文的变量对象始终位于作用域链的最前端。
+    function main() {
+      const a = 1;
+      console.log(arguments);
+    }
+    // main();
+
+    var color = "red";
+    var ccc = "";
+    function changeColor() {
+      let anotherColor = "red";
+      console.log(arguments);
+      const symbols = Object.getOwnPropertySymbols(arguments);
+      const firstSymbol = symbols[0]; // 获取第一个 Symbol 键
+      console.log(firstSymbol, arguments);
+
+      console.log(arguments[firstSymbol]());
+      ccc = function swapColors() {
+        let ccc3 = 2;
+        let tempColor = anotherColor;
+        anotherColor = color;
+      };
+      //   console.log(swapColors);
+      ccc();
+    }
+    changeColor();
+  </script>
+</html>

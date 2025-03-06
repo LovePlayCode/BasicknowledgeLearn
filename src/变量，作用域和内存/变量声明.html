@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // 使用 var 时，变量自动添加到最近的上下文
+    function add(sum1, sum2) {
+      var sum = sum1 + sum2;
+      return sum;
+    }
+    add();
+    // console.log(sum);
+
+    // 如果未经声明就初始化，自动添加到全局上下文
+    function fly() {
+      hel = "123";
+    }
+    fly();
+    console.log(hel);
+
+    // 变量提升
+
+    var name;
+    console.log("name==", name);
+    name = "lhl222";
+  </script>
+</html>
