@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // 给多个参数定义默认值跟使用 let 关键字声明变量一样
+    function makeing(name = "Henry", numerals = "VIII") {
+      return `King ${name} ${numerals}`;
+    }
+    console.log(makeing());
+
+    // 后定义默认值参数可以引用先定义的参数
+    function makeKing(name = "Henry", numerals = name) {
+      return `King ${name} ${numerals}`;
+    }
+    console.log(makeKing());
+
+    // 参数初始化遵循"暂时性死区"规则，前面定义的参数不能引用后面定义的。
+    function makeKing(name = numerals, numerals = "lhl") {
+      return `${name} && ${numerals}`;
+    }
+    makeKing();
+  </script>
+</html>

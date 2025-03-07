@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    function factorial(sum) {
+      if (sum <= 1) {
+        return 1;
+      }
+      // 如果修改了函数名，这里会有问题
+      //   return sum * factorial(sum - 1);
+      // 可以改成以下
+      return sum * arguments.callee(sum - 1);
+    }
+    let trueFactorial = factorial;
+    factorial = () => {
+      return 0;
+    };
+    console.log(trueFactorial(4));
+    console.log(factorial(4));
+
+    // caller
+    function outer() {
+      inner();
+    }
+    function inner() {
+      console.log(inner.caller);
+    }
+    outer();
+  </script>
+</html>

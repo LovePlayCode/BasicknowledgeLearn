@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // JS 引擎在任何代码执行之前，会先读取函数声明，并在执行上下文中生成函数定义。
+    console.log(sum(1, 2));
+    function sum(a1, a2) {
+      return a1 + a2;
+    }
+
+    // 如果使用函数表达式，只有在声明的后面调用才不会报错
+    console.log(sum1(10, 20));
+    let sum1 = function (sum1, sum2) {
+      return sum1 + sum2;
+    };
+    console.log(sum1(10, 20));
+  </script>
+</html>
