@@ -29,6 +29,7 @@
     }
     // 函数闭包相关
     function inner() {
+      // 指向实际调用他的函数
       console.log(inner.caller);
     }
     outer();
