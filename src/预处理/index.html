@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>用来学习预处理的文件</div>
+  </body>
+  <script>
+    bb();
+    console.log("a==", a);
+    var a = 4;
+    function bb() {
+      console.log("function a == ", a);
+      var a = 3;
+      console.log("function a == ", a);
+    }
+    let v = 4;
+    console.log("function is ==", fn1, fn2);
+    if (v === 4) {
+      function fn1() {
+        console.log("Test");
+      }
+    } else {
+      function fn2() {
+        console.log("Test2");
+      }
+    }
+    // console.log("Class is ", Test);
+    class Test {
+      constructor() {
+        console.log("This is a Class");
+      }
+    }
+    console.log("Test2==", Test2);
+    if (v === 4) {
+      class Test2 {}
+    }
+  </script>
+</html>
